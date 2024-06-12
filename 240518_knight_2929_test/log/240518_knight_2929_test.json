@@ -1,0 +1,15 @@
+{
+    "result": {
+        "0": 0,
+        "1": 12.121641603676048,
+        "2": 18.685444400117206,
+        "3": 22.844932079315186
+    },
+    "name": "240518_knight_2929_test",
+    "depth": 4,
+    "width": 64,
+    "LF_mode": "uvxy",
+    "datadir": "/data/hmjung/data_backup/NeuLF_rgb/dataset/stanford_half/gem",
+    "lr": 4e-05,
+    "dataset_name": "gem"
+}

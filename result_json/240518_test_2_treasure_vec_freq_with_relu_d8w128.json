@@ -1,0 +1,12 @@
+{
+    "result": {
+        "0": 0
+    },
+    "name": "/data/hmjung/result240518_test_2/240518_test_2_treasure_vec_freq_with_relu_d8w128",
+    "depth": 8,
+    "width": 128,
+    "LF_mode": "vec",
+    "datadir": "/data/hmjung/data_backup/NeuLF/dataset/stanford_half/treasure",
+    "lr": 4e-05,
+    "dataset_name": "treasure"
+}

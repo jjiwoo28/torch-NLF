@@ -1,0 +1,22 @@
+{
+    "result": {
+        "0": 0,
+        "10": 19.228527087431686,
+        "20": 20.23660036233755,
+        "30": 21.164865310375507,
+        "40": 21.568858990302452,
+        "50": 21.900392128871037,
+        "60": 22.06810529415424,
+        "70": 22.19549692594088,
+        "80": 22.309790024390587,
+        "90": 22.43325820335975,
+        "100": 22.53112554550171
+    },
+    "name": "/data/hmjung/result240522/240522_fern_teacher_uvxy_wire_encX",
+    "depth": 8,
+    "width": 256,
+    "LF_mode": "uvxy",
+    "datadir": "/data/hmjung/data_backup/gaussian-splatting/dataset/nerf_llff_data/fern_teacher",
+    "lr": 4e-05,
+    "dataset_name": "fern_teacher"
+}

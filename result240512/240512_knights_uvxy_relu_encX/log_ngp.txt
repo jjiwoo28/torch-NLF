@@ -1,0 +1,24 @@
+[INFO] Trainer: ngp | 2024-05-13_15-34-26 | cuda | fp32 | result240512/240512_knights_uvxy_relu_encX
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000400 ...
+==> Finished Epoch 1.
+==> Start Training Epoch 2, lr=0.000388 ...
+==> Finished Epoch 2.
+==> Start Training Epoch 3, lr=0.000376 ...
+[INFO] Trainer: ngp | 2024-05-13_15-41-29 | cuda | fp32 | result240512/240512_knights_uvxy_relu_encX
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is result240512/240512_knights_uvxy_relu_encX/checkpoints/ngp_ep0002.pth
+[INFO] loaded model.
+[INFO] load at epoch 2, global step 18496
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+++> Evaluate at epoch 2 ...
+PSNR = 23.091845
+LPIPS (alex) = 0.463909
+++> Evaluate epoch 2 Finished.
+==> Start Test, save results to result240512/240512_knights_uvxy_relu_encX/results
+==> Finished Test.

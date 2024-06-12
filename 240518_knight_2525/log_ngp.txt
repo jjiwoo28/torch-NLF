@@ -1,0 +1,94 @@
+[INFO] Trainer: ngp | 2024-05-18_08-29-20 | cuda | fp32 | 240518_knight_2525
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000040 ...
+==> Finished Epoch 1.
+==> Start Training Epoch 2, lr=0.000039 ...
+==> Finished Epoch 2.
+==> Start Training Epoch 3, lr=0.000038 ...
+==> Finished Epoch 3.
+==> Start Training Epoch 4, lr=0.000037 ...
+==> Finished Epoch 4.
+==> Start Training Epoch 5, lr=0.000035 ...
+==> Finished Epoch 5.
+==> Start Training Epoch 6, lr=0.000034 ...
+==> Finished Epoch 6.
+==> Start Training Epoch 7, lr=0.000033 ...
+==> Finished Epoch 7.
+==> Start Training Epoch 8, lr=0.000032 ...
+==> Finished Epoch 8.
+==> Start Training Epoch 9, lr=0.000031 ...
+==> Finished Epoch 9.
+==> Start Training Epoch 10, lr=0.000030 ...
+[INFO] Trainer: ngp | 2024-05-18_08-50-44 | cuda | fp32 | 240518_knight_2525
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240518_knight_2525/checkpoints/ngp_ep0009.pth
+[INFO] loaded model.
+[INFO] load at epoch 9, global step 83232
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+==> Start Test, save results to 240518_knight_2525/results
+==> Finished Test.
+[INFO] Trainer: ngp | 2024-05-18_08-51-08 | cuda | fp32 | 240518_knight_2525
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240518_knight_2525/checkpoints/ngp_ep0009.pth
+[INFO] loaded model.
+[INFO] load at epoch 9, global step 83232
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+++> Evaluate at epoch 9 ...
+PSNR = 22.713386
+LPIPS (alex) = 0.481839
+++> Evaluate epoch 9 Finished.
+==> Start Test, save results to 240518_knight_2525/results
+==> Finished Test.
+[INFO] Trainer: ngp | 2024-05-18_08-53-18 | cuda | fp32 | 240518_knight_2525
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240518_knight_2525/checkpoints/ngp_ep0009.pth
+[INFO] loaded model.
+[INFO] load at epoch 9, global step 83232
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+==> Start Training Epoch 10, lr=0.000030 ...
+==> Finished Epoch 10.
+++> Evaluate at epoch 10 ...
+PSNR = 14.033016
+LPIPS (alex) = 0.665041
+++> Evaluate epoch 10 Finished.
+[INFO] New best result: None --> 0.0395205809256515
+==> Start Training Epoch 11, lr=0.000029 ...
+==> Finished Epoch 11.
+==> Start Training Epoch 12, lr=0.000029 ...
+[INFO] Trainer: ngp | 2024-05-18_08-58-59 | cuda | fp32 | 240518_knight_2525
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240518_knight_2525/checkpoints/ngp_ep0011.pth
+[INFO] loaded model.
+[INFO] load at epoch 11, global step 97104
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+==> Start Test, save results to 240518_knight_2525/results
+==> Finished Test.
+[INFO] Trainer: ngp | 2024-05-18_08-59-20 | cuda | fp32 | 240518_knight_2525
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240518_knight_2525/checkpoints/ngp_ep0011.pth
+[INFO] loaded model.
+[INFO] load at epoch 11, global step 97104
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+++> Evaluate at epoch 11 ...
+PSNR = 25.933426
+LPIPS (alex) = 0.305992
+++> Evaluate epoch 11 Finished.
+==> Start Test, save results to 240518_knight_2525/results
+==> Finished Test.

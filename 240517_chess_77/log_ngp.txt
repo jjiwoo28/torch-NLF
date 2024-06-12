@@ -1,0 +1,12 @@
+[INFO] Trainer: ngp | 2024-05-17_06-44-27 | cuda | fp32 | 240517_chess_77
+[INFO] #parameters: 17155
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000400 ...
+==> Finished Epoch 1.
+==> Start Test, save results to 240517_chess_77/results
+==> Finished Test.
+++> Evaluate at epoch 1 ...
+PSNR = 13.060980
+LPIPS (alex) = 0.762466
+++> Evaluate epoch 1 Finished.

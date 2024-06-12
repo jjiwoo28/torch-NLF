@@ -1,0 +1,13 @@
+[INFO] Trainer: ngp | 2024-05-18_07-27-08 | cuda | fp32 | 240518_knight_2424
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000040 ...
+[INFO] Trainer: ngp | 2024-05-18_08-11-54 | cuda | fp32 | 240518_knight_2424
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+[INFO] Trainer: ngp | 2024-05-18_08-16-37 | cuda | fp32 | 240518_knight_2424
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.

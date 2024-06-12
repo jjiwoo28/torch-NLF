@@ -1,0 +1,27 @@
+[INFO] Trainer: ngp | 2024-05-18_10-50-40 | cuda | fp32 | 240518_knight_3030_test
+[INFO] #parameters: 19203
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000040 ...
+==> Finished Epoch 1.
+[WARN] no evaluated results found, skip saving best checkpoint.
+++> Evaluate at epoch 1 ...
+PSNR = 14.997723
+LPIPS (alex) = 0.687980
+++> Evaluate epoch 1 Finished.
+==> Start Training Epoch 2, lr=0.000039 ...
+==> Finished Epoch 2.
+[INFO] New best result: None --> 0.031653483121379
+++> Evaluate at epoch 2 ...
+PSNR = 23.399654
+LPIPS (alex) = 0.415489
+++> Evaluate epoch 2 Finished.
+==> Start Training Epoch 3, lr=0.000038 ...
+==> Finished Epoch 3.
+[INFO] New best result: 0.031653483121379 --> 0.0045853305003933
+++> Evaluate at epoch 3 ...
+PSNR = 25.679489
+LPIPS (alex) = 0.357892
+++> Evaluate epoch 3 Finished.
+==> Start Test, save results to 240518_knight_3030_test/results
+==> Finished Test.

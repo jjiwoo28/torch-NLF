@@ -1,0 +1,16 @@
+[INFO] Trainer: ngp | 2024-05-05_09-46-54 | cuda | fp32 | 240505_bike_1by1_direction1_inin
+[INFO] #parameters: 528899
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000400 ...
+[INFO] Trainer: ngp | 2024-05-05_09-47-27 | cuda | fp32 | 240505_bike_1by1_direction1_inin
+[INFO] #parameters: 528899
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000400 ...
+[INFO] Trainer: ngp | 2024-05-06_08-05-56 | cuda | fp32 | 240505_bike_1by1_direction1_inin
+[INFO] #parameters: 528899
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Test, save results to 240505_bike_1by1_direction1_inin/results
+==> Finished Test.

@@ -1,0 +1,22 @@
+{
+    "result": {
+        "0": 0,
+        "10": 21.16202996327327,
+        "20": 22.23155590204092,
+        "30": 23.088132234720085,
+        "40": 23.375852291400616,
+        "50": 23.68380803328294,
+        "60": 23.957472581129807,
+        "70": 24.094666884495663,
+        "80": 24.21178304232084,
+        "90": 24.316015243530273,
+        "100": 24.396243278796856
+    },
+    "name": "/data/hmjung/result240522/240522_fern_teacher_vec_relu_encX",
+    "depth": 8,
+    "width": 256,
+    "LF_mode": "vec",
+    "datadir": "/data/hmjung/data_backup/gaussian-splatting/dataset/nerf_llff_data/fern_teacher",
+    "lr": 4e-05,
+    "dataset_name": "fern_teacher"
+}

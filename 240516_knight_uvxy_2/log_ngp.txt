@@ -1,0 +1,18 @@
+[INFO] Trainer: ngp | 2024-05-17_03-46-01 | cuda | fp32 | 240516_knight_uvxy_2
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000400 ...
+==> Finished Epoch 1.
+==> Start Training Epoch 2, lr=0.000388 ...
+[INFO] Trainer: ngp | 2024-05-17_03-48-58 | cuda | fp32 | 240516_knight_uvxy_2
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240516_knight_uvxy_2/checkpoints/ngp_ep0001.pth
+[INFO] loaded model.
+[INFO] load at epoch 1, global step 9248
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+==> Start Test, save results to 240516_knight_uvxy_2/results
+==> Finished Test.

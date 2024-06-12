@@ -1,0 +1,15 @@
+{
+    "result": {
+        "0": 0,
+        "1": 15.437113884333018,
+        "2": 20.03852470501049,
+        "3": 21.14158427393114
+    },
+    "name": "240518_knight_3232_test",
+    "depth": 4,
+    "width": 64,
+    "LF_mode": "uvxy",
+    "datadir": "/data/hmjung/data_backup/NeuLF_rgb/dataset/stanford_half/knights",
+    "lr": 4e-05,
+    "dataset_name": "knights"
+}

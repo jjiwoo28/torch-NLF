@@ -1,0 +1,18 @@
+{
+    "result": {
+        "0": 0,
+        "750": 34.797340405953896,
+        "800": 34.797340405953896,
+        "850": 34.797340405953896,
+        "900": 34.797340405953896,
+        "950": 34.797340405953896,
+        "1000": 34.797340405953896
+    },
+    "name": "240518_knight_Neulf777777777777_uvxy",
+    "depth": 8,
+    "width": 256,
+    "LF_mode": "uvxy",
+    "datadir": "/data/hmjung/data_backup/NeuLF_rgb/dataset/stanford_half/knights",
+    "lr": 4e-05,
+    "dataset_name": "knights"
+}

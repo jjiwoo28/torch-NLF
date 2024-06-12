@@ -1,0 +1,22 @@
+{
+    "result": {
+        "0": 0,
+        "10": 25.07234541145531,
+        "20": 26.51732889381615,
+        "30": 27.376287370114714,
+        "40": 27.993351317740775,
+        "50": 28.503372282595247,
+        "60": 28.908020483480918,
+        "70": 29.248806785892796,
+        "80": 29.50828977533289,
+        "90": 29.74388612283243,
+        "100": 29.928779473175872
+    },
+    "name": "/data/hmjung/result240518_test_2/240518_test_2_treasure_vec_freq_and_sh_with_wire",
+    "depth": 8,
+    "width": 256,
+    "LF_mode": "vec",
+    "datadir": "/data/hmjung/data_backup/NeuLF/dataset/stanford_half/treasure",
+    "lr": 4e-05,
+    "dataset_name": "treasure"
+}

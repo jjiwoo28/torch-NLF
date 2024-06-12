@@ -1,0 +1,34 @@
+__pycache__/
+build/
+*.egg-info/
+*.so
+
+tmp*
+data/
+trial*/
+.vs/
+
+#**dnerf*
+#dnerf/
+dnerf/network_rf.py
+dnerf/network_basis_perpoint.py
+
+**neus*
+neus/
+
+# Ignore image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+
+# Ignore video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.ubuntu
+*.pth

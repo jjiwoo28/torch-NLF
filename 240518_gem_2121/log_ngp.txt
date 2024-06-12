@@ -1,0 +1,22 @@
+[INFO] Trainer: ngp | 2024-05-18_06-52-13 | cuda | fp32 | 240518_gem_2121
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[WARN] No checkpoint found, model randomly initialized.
+==> Start Training Epoch 1, lr=0.000400 ...
+==> Finished Epoch 1.
+==> Start Training Epoch 2, lr=0.000388 ...
+[INFO] Trainer: ngp | 2024-05-18_06-54-06 | cuda | fp32 | 240518_gem_2121
+[INFO] #parameters: 528387
+[INFO] Loading latest checkpoint ...
+[INFO] Latest checkpoint is 240518_gem_2121/checkpoints/ngp_ep0001.pth
+[INFO] loaded model.
+[INFO] load at epoch 1, global step 6936
+[INFO] loaded optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+++> Evaluate at epoch 1 ...
+PSNR = 24.637122
+LPIPS (alex) = 0.365127
+++> Evaluate epoch 1 Finished.
+==> Start Test, save results to 240518_gem_2121/results
+==> Finished Test.
