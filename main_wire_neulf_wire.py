@@ -7,7 +7,7 @@ from nerf.utils import *
 
 from functools import partial
 from loss import huber_loss
-from nerf.neulf.network import NeuLFWireNetwork,NeuLFNetwork
+from nerf.neulf.network import NeuLFWireNetwork,NeuLFNetwork,NeuLFWireNetwork2
 
 #torch.autograd.set_detect_anomaly(True)
 
@@ -75,15 +75,19 @@ if __name__ == '__main__':
     parser.add_argument('--loss_coeff', type=int, default=1)
 
     parser.add_argument('--skip_mode2', action='store_true')
-    parser.add_argument('--test240618', action='store_true')
+    parser.add_argument('--no_skips', action='store_true')
 
     parser.add_argument('--neulf', action='store_true')
 
     parser.add_argument('--LF_mode', type=str, default='vec')
-    
 
+
+    
     parser.add_argument('--sigma', type=int, default=40 )
     parser.add_argument('--omega', type=int, default=40 )
+
+    
+
 
     opt = parser.parse_args()
 
@@ -127,9 +131,14 @@ if __name__ == '__main__':
     print(opt)
     
     seed_everything(opt.seed)
+    if opt.no_skips:
+        skips = []
+    else:
+        skips = [4]
 
     
-   
+    model = NeuLFWireNetwork( num_layers=opt.depth ,hidden_dim=opt.width , input_dim=input_dim, skips=skips)
+    lr = opt.lr
     
     # if opt.skip_mode2:
     #     skips = [3,7,11,15,19]
@@ -139,12 +148,9 @@ if __name__ == '__main__':
 
     if opt.neulf:
         
-        model = NeuLFNetwork( num_layers=opt.depth ,hidden_dim=opt.width , input_dim=input_dim)
+        model = NeuLFNetwork( num_layers=opt.depth ,hidden_dim=opt.width , input_dim=input_dim, skips=skips , sigma = opt.sigma , omega = opt.omega)
         lr = 5e-4
         lr = 5e-04
-    else:
-        model = NeuLFWireNetwork( num_layers=opt.depth + 2 ,hidden_dim=opt.width , test = opt.jw_test , input_dim=input_dim, sigma=opt.sigma, omega=opt.omega)
-        lr = opt.lr
 
     print(model)
 
@@ -197,11 +203,8 @@ if __name__ == '__main__':
             #trainer.save_mesh(resolution=256, threshold=10)
 
     else:
-        if opt.test240618:
-            print("@@@@@@@@@@@@@@@@test240618@@@@@@@@@@@@@@@@")
-            optimizer = lambda model: torch.optim.Adam(model.parameters(), lr = lr , betas=(0.9, 0.999))
-        else:
-            optimizer = lambda model: torch.optim.Adam(model.get_params(lr), betas=(0.9, 0.999), eps=1e-15)
+        
+        optimizer = lambda model: torch.optim.Adam(model.parameters(), lr = lr , betas=(0.9, 0.999))
         train_loader = Dataset(opt, device=device, type='train_neulf').dataloader()
 
         # decay to 0.1 * init_lr at last iter step
@@ -212,7 +215,8 @@ if __name__ == '__main__':
             scheduler = lambda optimizer: optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.995) 
             
         else:    
-            scheduler = lambda optimizer: optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.97) 
+            scheduler = lambda optimizer: optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.995) 
+            #scheduler = lambda optimizer: optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.97) 
         
         
         #scheduler = lambda optimizer: optim.lr_scheduler.LambdaLR(optimizer, lambda iter: 0.1 ** min(iter / opt.iters, 1))

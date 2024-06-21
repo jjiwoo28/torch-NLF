@@ -53,10 +53,10 @@ class NeuLFDataset(NeRFDataset):
         self.z_max = self.poses[:,2,3].max()
 
   
-        self.set_top_two_dimensions()
+        #self.set_top_two_dimensions()
         #self.normalize_poses()
         print(f"self.x_index : {self.x_index}  self.y_index : {self.y_index}")
-        
+       #breakpoint()
         if type != 'train_neulf':
 
             temp = []
@@ -69,6 +69,7 @@ class NeuLFDataset(NeRFDataset):
             N  = self.poses.shape[0]
             self.poses = self.poses.view(N,self.H*self.W,self.poses.shape[-1])
             
+          
             #self.images = self.images.view(N,self.H*self.W,self.poses.shape[-1])
             if self.images is None:
                 self.train_loader = [{'lightfield': self.poses[i, :, :]} for i in range(self.poses.shape[0])]
@@ -76,7 +77,7 @@ class NeuLFDataset(NeRFDataset):
                 
                 #self.images = self.images.view(N,self.H*self.W,self.images.shape[-1])
                 self.train_loader = [{'lightfield': self.poses[i, :, :],
-                                      'images': self.images[i,:,:,:]} for i in range(self.poses.shape[0])]
+                                      'images': self.images[i,:,:]} for i in range(self.poses.shape[0])]
             print("test")
 
         
@@ -245,7 +246,7 @@ class UVXYDataset(NeuLFDataset):
         s = torch.ones_like(u) * poses[:, self.x_index, 3].view(B, 1, 1)  # Use view for safe broadcasting
         t = torch.ones_like(v) * poses[:, self.y_index, 3].view(B, 1, 1)
 
-        uvst = torch.stack((u, v, s*0.1, t*0.1), dim=-1)
+        uvst = torch.stack((u, v, s ,t), dim=-1)
 
         return uvst
 

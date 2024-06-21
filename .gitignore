@@ -5,6 +5,9 @@ build/
 
 tmp*
 data/
+result_exp/
+rus_sh/
+
 trial*/
 .vs/
 

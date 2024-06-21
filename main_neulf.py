@@ -1,13 +1,13 @@
 import torch
 import argparse
 
-from nerf.neulf.provider import NeuLFDataset , UVSTDataset , UVXYDataset
+from nerf.neulf.provider import NeuLFDataset , UVXYDataset , UVSTDataset
 from nerf.gui import NeRFGUI
 from nerf.utils import *
 
 from functools import partial
 from loss import huber_loss
-from nerf.neulf.network import NeuLFNetwork
+from nerf.neulf.network import NeuLFWireNetwork,NeuLFNetwork
 
 #torch.autograd.set_detect_anomaly(True)
 
@@ -23,8 +23,8 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=0)
 
     ### training options
-    parser.add_argument('--iters', type=int, default=5000000, help="training iters")
-    parser.add_argument('--lr', type=float, default=1e-2, help="initial learning rate")
+    parser.add_argument('--iters', type=int, default=200000, help="training iters")
+    parser.add_argument('--lr', type=float, default=4e-5, help="initial learning rate")
     parser.add_argument('--ckpt', type=str, default='latest')
     parser.add_argument('--num_rays', type=int, default=4096, help="num rays sampled per image for each training step")
     parser.add_argument('--cuda_ray', action='store_true', help="use CUDA raymarching instead of pytorch")
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     parser.add_argument('--preload', action='store_true', help="preload all data into GPU, accelerate training but use more GPU memory")
     # (the default value is for the fox dataset)
     parser.add_argument('--bound', type=float, default=2, help="assume the scene is bounded in box[-bound, bound]^3, if > 1, will invoke adaptive ray marching.")
-    parser.add_argument('--scale', type=float, default=0.33, help="scale camera location into box[-bound, bound]^3")
+    parser.add_argument('--scale', type=float, default=1, help="scale camera location into box[-bound, bound]^3")
     parser.add_argument('--offset', type=float, nargs='*', default=[0, 0, 0], help="offset of camera location")
     parser.add_argument('--dt_gamma', type=float, default=1/128, help="dt_gamma (>=0) for adaptive ray marching. set to 0 to disable, >0 to accelerate rendering (but usually with worse quality)")
     parser.add_argument('--min_near', type=float, default=0.2, help="minimum near distance for camera")
@@ -64,17 +64,26 @@ if __name__ == '__main__':
     parser.add_argument('--error_map', action='store_true', help="use error map to sample rays")
     parser.add_argument('--clip_text', type=str, default='', help="text input for CLIP guidance")
     parser.add_argument('--rand_pose', type=int, default=-1, help="<0 uses no rand pose, =0 only uses rand pose, >0 sample one rand pose every $ known poses")
-    
-    ### jw
 
+    ### jw 
     parser.add_argument('--depth', type=int, default=6 )
     parser.add_argument('--width', type=int, default=256 )
     parser.add_argument('--exp_sc', action='store_true')
-    parser.add_argument('--jw_test', type=str, default='all')
+    parser.add_argument('--jw_test', type=str, default='in')
     parser.add_argument('--whole_epoch', type=int, default=100)
-    
-    parser.add_argument('--LF_mode', type=str, default='vec')
+    parser.add_argument('--eval_interval', type=int, default=10)
+    parser.add_argument('--loss_coeff', type=int, default=1)
 
+    parser.add_argument('--skip_mode2', action='store_true')
+    parser.add_argument('--test240618', action='store_true')
+
+    parser.add_argument('--neulf', action='store_true')
+
+    parser.add_argument('--LF_mode', type=str, default='vec')
+    
+
+    parser.add_argument('--sigma', type=int, default=40 )
+    parser.add_argument('--omega', type=int, default=40 )
 
     opt = parser.parse_args()
 
@@ -89,11 +98,11 @@ if __name__ == '__main__':
         assert opt.num_rays % (opt.patch_size ** 2) == 0, "patch_size ** 2 should be dividable by num_rays."
 
 
-    input_dim = 0
-    Dataset = None
+ 
 
     if opt.LF_mode == "vec":
         input_dim = 6
+        Dataset = NeuLFDataset
     elif opt.LF_mode == "uvxy":
         input_dim = 4
         Dataset = UVXYDataset
@@ -103,23 +112,21 @@ if __name__ == '__main__':
 
 
 
-    # if opt.ff:
-    #     opt.fp16 = True
-    #     assert opt.bg_radius <= 0, "background model is not implemented for --ff"
-    #     from nerf.network_ff import NeRFNetwork
-    # elif opt.tcnn:
-    #     opt.fp16 = True
-    #     assert opt.bg_radius <= 0, "background model is not implemented for --tcnn"
-    #     from nerf.network_tcnn import NeRFNetwork
-    # else:
-    #     from nerf.network import NeRFNetwork
-
     print(opt)
     
     seed_everything(opt.seed)
 
-    model = NeuLFNetwork( num_layers=opt.depth + 2 ,hidden_dim=opt.width , input_dim=input_dim)
-    
+
+    # if opt.skip_mode2:
+    #     skips = [3,7,11,15,19]
+    # else:
+    #     skips = [4,8,12,16,20]
+
+
+   
+    model = NeuLFNetwork( num_layers=opt.depth ,hidden_dim=opt.width , input_dim=input_dim)
+    lr = 5e-04
+  
     print(model)
 
     criterion = torch.nn.MSELoss(reduction='none')
@@ -128,15 +135,10 @@ if __name__ == '__main__':
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    if opt.debug:
-        breakpoint()
-        debug_dataset = Dataset(opt, device=device, type='train')
-        index = [3]
-        test = debug_dataset.collate(index)
-        debug_loader = debug_dataset.dataloader()
+   
 
         
-    
+
     if opt.test:
         
         metrics = [PSNRMeter(), LPIPSMeter(device=device)]
@@ -177,20 +179,36 @@ if __name__ == '__main__':
 
     else:
         
-        optimizer = lambda model: torch.optim.Adam(model.get_params(opt.lr), betas=(0.9, 0.999), eps=1e-15)
-
+        optimizer = lambda model: torch.optim.Adam(model.parameters(), lr = lr , betas=(0.9, 0.999))
+    
         train_loader = Dataset(opt, device=device, type='train_neulf').dataloader()
 
         # decay to 0.1 * init_lr at last iter step
+   
         
-        scheduler = lambda optimizer: optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.97) 
+        
+   
+        scheduler = lambda optimizer: optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.995) 
        
+        
         #scheduler = lambda optimizer: optim.lr_scheduler.LambdaLR(optimizer, lambda iter: 0.1 ** min(iter / opt.iters, 1))
+        logger_path = os.path.join(opt.workspace , 'log')
+        logger = PSNRLogger(logger_path,opt.workspace)
+        logger.set_metadata("depth",opt.depth)
+        logger.set_metadata("width",opt.width)
+        logger.set_metadata("LF_mode",opt.LF_mode)
+        logger.set_metadata("datadir",opt.path)
+        logger.set_metadata("lr",opt.lr)
+        dataset_name = opt.path.split('/')[-1]
+        logger.set_metadata("dataset_name",dataset_name)
 
-        metrics = [PSNRMeter(), LPIPSMeter(device=device)]
-        trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, optimizer=optimizer, criterion=criterion, ema_decay=0.95, fp16=opt.fp16, lr_scheduler=scheduler, scheduler_update_every_step=False, metrics=metrics, use_checkpoint=opt.ckpt, eval_interval=10)
 
-        if opt.gui:
+        logger.load_results()
+
+        metrics = [PSNRMeterWithLogger(logger), LPIPSMeter(device=device) ]
+        trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, optimizer=optimizer, criterion=criterion, ema_decay=None, fp16=opt.fp16, lr_scheduler=scheduler, scheduler_update_every_step=False, metrics=metrics, use_checkpoint=opt.ckpt, eval_interval=opt.eval_interval , loss_coeff=opt.loss_coeff)
+
+        if opt.gui: 
             gui = NeRFGUI(opt, trainer, train_loader)
             gui.render()
         
@@ -202,10 +220,12 @@ if __name__ == '__main__':
             max_epoch = opt.whole_epoch
             trainer.train(train_loader, test_loader, max_epoch)
 
+            logger.save_results()
+
             # also test
             
-            # if test_loader.has_gt:
-            #     trainer.evaluate(test_loader) # blender has gt, so evaluate it.
+            if test_loader.has_gt:
+                trainer.evaluate(test_loader) # blender has gt, so evaluate it.
             
             trainer.test(test_loader, write_video=True) # test and save video
             

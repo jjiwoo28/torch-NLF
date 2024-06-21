@@ -142,21 +142,21 @@ if __name__ == '__main__':
     # print(f'[INFO] average radius = {avglen}')
 
 #jw
-    positions = poses[:, :3, 3]
+    # positions = poses[:, :3, 3]
 
-    # 최대 및 최소 값 계산
-    max_pos = positions.max(axis=0)
-    min_pos = positions.min(axis=0)
+    # # 최대 및 최소 값 계산
+    # max_pos = positions.max(axis=0)
+    # min_pos = positions.min(axis=0)
 
-    # 분모가 0이 되는 것을 방지
-    scale = max_pos - min_pos
-    scale[scale == 0] = 1  # 0인 경우 1로 설정하여 나눗셈에서 0으로 나누는 것을 방지
+    # # 분모가 0이 되는 것을 방지
+    # scale = max_pos - min_pos
+    # scale[scale == 0] = 1  # 0인 경우 1로 설정하여 나눗셈에서 0으로 나누는 것을 방지
 
-    # 각 축별로 정규화 수행
-    normalized_positions = 2 * (positions - min_pos) / scale - 1
+    # # 각 축별로 정규화 수행
+    # normalized_positions = 2 * (positions - min_pos) / scale - 1
 
-    # 정규화된 위치 벡터를 원래의 포즈에 다시 할당
-    poses[:, :3, 3] = normalized_positions
+    # # 정규화된 위치 벡터를 원래의 포즈에 다시 할당
+    # poses[:, :3, 3] = normalized_positions
 #jw
 
 
@@ -165,8 +165,8 @@ if __name__ == '__main__':
     # construct frames
 
     all_ids = np.arange(N)
-    test_ids = np.array([72, 76, 80, 140, 144, 148, 208, 212, 216])
-    train_ids = np.array([i for i in all_ids if i not in test_ids])
+    test_ids = all_ids[::opt.hold]
+    train_ids = np.array([i for i in all_ids])
 
     frames_train = []
     frames_test = []

@@ -17,8 +17,8 @@ def copy_json_files(source_folder, target_folder):
                 print(f"Copied: {source_path} to {target_path}")
 
 # 사용 예시
-source_folder1 = "/data/hmjung/result240522" 
+source_folder1 = "/data/hmjung/result240618_torch_neulf_stanford_skips_test240618" 
 #source_folder2 = "/data/hmjung/result240518_test_2" 
-target_folder =  "result_json_240523"
+target_folder =  "result_json_240618_torch_neulf_stanford_skips_test240618"
 copy_json_files(source_folder1, target_folder)
 #copy_json_files(source_folder2, target_folder)

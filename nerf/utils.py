@@ -515,6 +515,7 @@ class Trainer(object):
                  use_checkpoint="latest", # which ckpt to use at init time
                  use_tensorboardX=True, # whether to use tensorboard for logging
                  scheduler_update_every_step=False, # whether to call scheduler.step() after every train step
+                 loss_coeff = 1,
                  ):
         
         self.name = name
@@ -537,6 +538,7 @@ class Trainer(object):
         self.scheduler_update_every_step = scheduler_update_every_step
         self.device = device if device is not None else torch.device(f'cuda:{local_rank}' if torch.cuda.is_available() else 'cpu')
         self.console = Console()
+        self.loss_coeff = loss_coeff
 
         model.to(self.device)
         if self.world_size > 1:
@@ -656,7 +658,7 @@ class Trainer(object):
 
             B, N = rays_o.shape[:2]
             H, W = data['H'], data['W']
-
+            
             # currently fix white bg, MUST force all rays!
             outputs = self.model.render(rays_o, rays_d, staged=False, bg_color=None, perturb=True, force_all_rays=True, **vars(self.opt))
             pred_rgb = outputs['image'].reshape(B, H, W, 3).permute(0, 3, 1, 2).contiguous()
@@ -689,14 +691,14 @@ class Trainer(object):
         else:
             gt_rgb = images
 
-
+        #breakdpoint()
         outputs = self.model.render(rays_o, rays_d, staged=False, bg_color=bg_color, perturb=True, force_all_rays=False if self.opt.patch_size == 1 else True, **vars(self.opt))
         # outputs = self.model.render(rays_o, rays_d, staged=False, bg_color=bg_color, perturb=True, force_all_rays=True, **vars(self.opt))
     
         pred_rgb = outputs['image']
 
         # MSE loss
-        loss = self.criterion(pred_rgb, gt_rgb).mean(-1) # [B, N, 3] --> [B, N]
+        loss = self.loss_coeff* self.criterion(pred_rgb, gt_rgb).mean(-1) # [B, N, 3] --> [B, N]
 
         # patch-based rendering
         if self.opt.patch_size > 1:
@@ -1030,7 +1032,7 @@ class Trainer(object):
             loader.sampler.set_epoch(self.epoch)
         
         if self.local_rank == 0:
-            pbar = tqdm.tqdm(total=len(loader) * loader.batch_size, bar_format='{desc}: {percentage:3.0f}% {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]')
+            pbar = tqdm.tqdm(total=len(loader) * loader.batch_size, bar_format='{desc}: {percentage:3.0f}% {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]',dynamic_ncols=True)
 
         self.local_step = 0
 
@@ -1121,6 +1123,7 @@ class Trainer(object):
         with torch.no_grad():
             self.local_step = 0
 
+
             for data in loader:    
                 self.local_step += 1
 
@@ -1156,7 +1159,8 @@ class Trainer(object):
 
                     # save image
                     save_path = os.path.join(self.workspace, 'validation', f'{name}_{self.local_step:04d}_rgb.png')
-                    save_path_depth = os.path.join(self.workspace, 'validation', f'{name}_{self.local_step:04d}_depth.png')
+                    save_path_gt = os.path.join(self.workspace, 'validation', f'{name}_{self.local_step:04d}_gt.png')
+                    #save_path_depth = os.path.join(self.workspace, 'validation', f'{name}_{self.local_step:04d}_depth.png')
 
                     #self.log(f"==> Saving validation image to {save_path}")
                     os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -1166,12 +1170,16 @@ class Trainer(object):
 
                     pred = preds[0].detach().cpu().numpy()
                     pred = (pred * 255).astype(np.uint8)
+                    
+                    truth = truths[0].detach().cpu().numpy()
+                    truth = (truth * 255).astype(np.uint8)
 
-                    pred_depth = preds_depth[0].detach().cpu().numpy()
-                    pred_depth = (pred_depth * 255).astype(np.uint8)
+                    # pred_depth = preds_depth[0].detach().cpu().numpy()
+                    # pred_depth = (pred_depth * 255).astype(np.uint8)
                     
                     cv2.imwrite(save_path, cv2.cvtColor(pred, cv2.COLOR_RGB2BGR))
-                    cv2.imwrite(save_path_depth, pred_depth)
+                    cv2.imwrite(save_path_gt , cv2.cvtColor(truth, cv2.COLOR_RGB2BGR))
+                    #cv2.imwrite(save_path_depth, pred_depth)
 
                     pbar.set_description(f"loss={loss_val:.4f} ({total_loss/self.local_step:.4f})")
                     pbar.update(loader.batch_size)

@@ -6,17 +6,18 @@ from cv2 import transform
 import tqdm
 import numpy as np
 from scipy.spatial.transform import Slerp, Rotation
-
+import torchvision.transforms as transforms
 import trimesh
 
 import torch
+from PIL import Image
 from torch.utils.data import DataLoader
 
 from .utils import get_rays
 
 
 # ref: https://github.com/NVlabs/instant-ngp/blob/b76004c8cf478880227401ae763be4c02f80b62f/include/neural-graphics-primitives/nerf_loader.h#L50
-def nerf_matrix_to_ngp(pose, scale=0.33, offset=[0, 0, 0]):
+def nerf_matrix_to_ngp(pose, scale=1, offset=[0, 0, 0]):
     # for the fox dataset, 0.33 scales camera radius to ~ 2
     new_pose = np.array([
         [pose[1, 0], -pose[1, 1], -pose[1, 2], pose[1, 3] * scale + offset[0]],
@@ -105,7 +106,7 @@ def rand_poses(size, device, radius=1, theta_range=[np.pi/3, 2*np.pi/3], phi_ran
 class NeRFDataset:
     def __init__(self, opt, device, type='train', downscale=1, n_test=10):
         super().__init__()
-        
+        #breakpoint()
         self.opt = opt
         self.device = device
         self.type = type # train, val, test
@@ -172,6 +173,28 @@ class NeRFDataset:
         # read images
         frames = transform["frames"]
         self.focal_depth = transform["focal_depth"]
+
+        self.x_index = transform["x_index"] if "x_index" in transform else None
+        self.y_index = transform["y_index"] if "y_index" in transform else None
+        
+        
+        if self.x_index is not None:
+            if self.x_index == 0:
+                self.x_index = 2
+            elif self.x_index == 1:
+                self.x_index = 0
+            elif  self.x_index == 2:
+                self.x_index = 1
+            
+           
+        if self.y_index is not None:
+            if self.y_index == 0:
+                self.y_index = 2
+            elif self.y_index == 1:
+                self.y_index = 0
+            elif  self.y_index == 2:
+                self.y_index = 1
+            
         #frames = sorted(frames, key=lambda d: d['file_path']) # why do I sort...
         
         # for colmap, manually interpolate a test set.
@@ -237,9 +260,25 @@ class NeRFDataset:
                 self.images.append(image)
              
         self.poses = torch.from_numpy(np.stack(self.poses, axis=0)) # [N, 4, 4]
+        #breakpoint()
         if self.images is not None:
             self.images = torch.from_numpy(np.stack(self.images, axis=0)) # [N, H, W, C]
-        
+
+        # if type == 'test':
+        #     #breakpoint()
+        #     images_cpu = self.images.cpu()
+
+        #     # 255를 곱하여 [0, 255] 범위로 변환
+        #     images_cpu = images_cpu * 255
+
+        #     # 텐서를 NumPy 배열로 변환
+        #     images_np = images_cpu.numpy().astype(np.uint8)
+
+        #     # 각 이미지를 개별 파일로 저장
+        #     for i in range(images_np.shape[0]):
+        #         img = Image.fromarray(images_np[i])
+        #         img.save(f'image_test_{i}.png')
+
         if type == 'render':
             self.renderN = 120
             N = self.renderN

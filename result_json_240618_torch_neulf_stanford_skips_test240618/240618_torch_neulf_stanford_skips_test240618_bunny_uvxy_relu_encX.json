@@ -1,0 +1,12 @@
+{
+    "result": {
+        "0": 0
+    },
+    "name": "/data/hmjung/result240618_torch_neulf_stanford_skips_test240618/240618_torch_neulf_stanford_skips_test240618_bunny_uvxy_relu_encX",
+    "depth": 8,
+    "width": 256,
+    "LF_mode": "uvxy",
+    "datadir": "/data/hmjung/data_backup/NeuLF/dataset/stanford_half/bunny",
+    "lr": 4e-05,
+    "dataset_name": "bunny"
+}

@@ -130,6 +130,7 @@ if __name__ == '__main__':
     y_center = (y_max + y_min) / 2
     z_center = (z_max + z_min) / 2
 
+
     ranges = [(x_range, 0), (y_range, 1), (z_range, 2)]
 
     # 차이가 큰 순서대로 정렬
@@ -137,6 +138,9 @@ if __name__ == '__main__':
 
     # 상위 두 개 차원 인덱스를 설정
     length_max = sorted_ranges[0][0]
+    
+    x_index = sorted_ranges[0][1]
+    y_index = sorted_ranges[1][1]
 
 
 
@@ -210,7 +214,6 @@ if __name__ == '__main__':
 #jw
 
 
-    # visualize_poses(poses)
 
     # construct frames
 
@@ -218,6 +221,8 @@ if __name__ == '__main__':
     test_ids = [all_ids[i] for i in [72, 76, 80, 140, 144, 148, 208, 212, 216]]
 
     train_ids = np.array([i for i in all_ids if i not in test_ids])
+
+
 
     frames_train = []
     frames_test = []
@@ -245,6 +250,8 @@ if __name__ == '__main__':
             'aabb_scale': 2,
             'frames': frames,
             'focal_depth':focal_depth,
+            'x_index' : x_index,
+            'y_index' : y_index,
         }
 
         # write
