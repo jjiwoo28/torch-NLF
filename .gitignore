@@ -6,7 +6,8 @@ build/
 tmp*
 data/
 result_exp/
-rus_sh/
+run_sh/
+result_json
 
 trial*/
 .vs/

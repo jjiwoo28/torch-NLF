@@ -230,7 +230,7 @@ if __name__ == '__main__':
         logger.load_results()
 
         metrics = [PSNRMeterWithLogger(logger), LPIPSMeter(device=device) ]
-        trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, optimizer=optimizer, criterion=criterion, ema_decay=None, fp16=opt.fp16, lr_scheduler=scheduler, scheduler_update_every_step=False, metrics=metrics, use_checkpoint=opt.ckpt, eval_interval=opt.eval_interval , loss_coeff=opt.loss_coeff)
+        trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, optimizer=optimizer, criterion=criterion, ema_decay=None, fp16=opt.fp16, lr_scheduler=scheduler, scheduler_update_every_step=False, metrics=metrics, use_checkpoint=opt.ckpt, eval_interval=opt.eval_interval , loss_coeff=1000)
 
         if opt.gui: 
             gui = NeRFGUI(opt, trainer, train_loader)
