@@ -68,22 +68,15 @@ if __name__ == '__main__':
     ### jw 
     parser.add_argument('--depth', type=int, default=6 )
     parser.add_argument('--width', type=int, default=256 )
-    parser.add_argument('--exp_sc', action='store_true')
-    parser.add_argument('--jw_test', type=str, default='in')
+
     parser.add_argument('--whole_epoch', type=int, default=100)
     parser.add_argument('--eval_interval', type=int, default=10)
     parser.add_argument('--loss_coeff', type=int, default=1)
 
-    parser.add_argument('--skip_mode2', action='store_true')
-    parser.add_argument('--test240618', action='store_true')
 
-    parser.add_argument('--neulf', action='store_true')
 
     parser.add_argument('--LF_mode', type=str, default='vec')
     
-
-    parser.add_argument('--sigma', type=int, default=40 )
-    parser.add_argument('--omega', type=int, default=40 )
 
     opt = parser.parse_args()
 
@@ -206,7 +199,7 @@ if __name__ == '__main__':
         logger.load_results()
 
         metrics = [PSNRMeterWithLogger(logger), LPIPSMeter(device=device) ]
-        trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, optimizer=optimizer, criterion=criterion, ema_decay=None, fp16=opt.fp16, lr_scheduler=scheduler, scheduler_update_every_step=False, metrics=metrics, use_checkpoint=opt.ckpt, eval_interval=opt.eval_interval , loss_coeff=opt.loss_coeff)
+        trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, optimizer=optimizer, criterion=criterion, ema_decay=None, fp16=opt.fp16, lr_scheduler=scheduler, scheduler_update_every_step=False, metrics=metrics, use_checkpoint=opt.ckpt, eval_interval=opt.eval_interval , loss_coeff=1000)
 
         if opt.gui: 
             gui = NeRFGUI(opt, trainer, train_loader)
