@@ -305,7 +305,7 @@ class PSNRLogger:
     def __init__(self, path, name):
         self.results = {}
         self.metadata = {'name': name}
-        self.file_name = name
+        self.file_name = os.path.basename(name)
         self.path = path
         self.push(0,0)
 
@@ -356,6 +356,10 @@ class PSNRMeterWithLogger:
             outputs.append(inp)
 
         return outputs
+    
+    def save_log(self):
+        self.logger.save_results()
+        
 
     def update(self, preds, truths):
         preds, truths = self.prepare_inputs(preds, truths) # [B, N, 3] or [B, H, W, 3], range[0, 1]
@@ -372,6 +376,7 @@ class PSNRMeterWithLogger:
     def write(self, writer, global_step, prefix=""):
         writer.add_scalar(os.path.join(prefix, "PSNR"), self.measure(), global_step)
         self.logger.push(self.measure() ,global_step)
+        self.save_log()
 
 
     def report(self):

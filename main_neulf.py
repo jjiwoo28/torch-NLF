@@ -194,6 +194,7 @@ if __name__ == '__main__':
         logger.set_metadata("lr",opt.lr)
         dataset_name = opt.path.split('/')[-1]
         logger.set_metadata("dataset_name",dataset_name)
+        #logger.set_metadata("model",str(model))
 
 
         logger.load_results()
