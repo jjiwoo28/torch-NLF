@@ -1,9 +1,12 @@
 import os
 import shutil
+import argparse
 
 def copy_json_files(source_folder, target_folder):
     # 대상 폴더 생성 (존재하지 않는 경우)
-    os.makedirs(target_folder, exist_ok=True)
+    if not os.path.exists(target_folder):
+        os.makedirs(target_folder, exist_ok=True)
+        print(f"Created target folder: {target_folder}")
 
     # source_folder를 순회하며 .json 파일 찾기
     for root, dirs, files in os.walk(source_folder):
@@ -16,9 +19,14 @@ def copy_json_files(source_folder, target_folder):
                 shutil.copy(source_path, target_path)
                 print(f"Copied: {source_path} to {target_path}")
 
-# 사용 예시
-source_folder1 = "/data/hmjung/result240618_torch_neulf_stanford_skips_test240618" 
-#source_folder2 = "/data/hmjung/result240518_test_2" 
-target_folder =  "result_json_240618_torch_neulf_stanford_skips_test240618"
-copy_json_files(source_folder1, target_folder)
-#copy_json_files(source_folder2, target_folder)
+def main():
+    parser = argparse.ArgumentParser(description="Copy JSON files from source to target folder")
+    parser.add_argument("source_folder", type=str, help="Source folder path")
+    parser.add_argument("target_folder", type=str, help="Target folder path")
+
+    args = parser.parse_args()
+
+    copy_json_files(args.source_folder, args.target_folder)
+
+if __name__ == "__main__":
+    main()
