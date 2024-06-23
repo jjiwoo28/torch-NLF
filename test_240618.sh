@@ -3,20 +3,20 @@ llff_path="/data/nerf_llff_data"
 bmw_path="/data/bmw_dataset"
 
 
-test_day="240621_torch_neulf_stanford_"
+test_day="240621_torch_neulf_stanford"
 depth="8"
 width="256"
-epoch="10"
+epoch="1000"
 #datasets=("gem" "knights" "bunny" "beans" "flowers" "chess" "bracelet" "bulldozer" "treasure" "truck" "tarot_small" "tarot")  
 datasets=( "gem" "bunny" "bracelet"  "flowers" "tarot" "chess" "bulldozer" "treasure")  
-datasets=("gem")  
+#datasets=("gem")  
 
 
 
 for dataset in "${datasets[@]}"; do
     echo "Processing $dataset"
     #python scripts/stanford2neulf.py "${stanford_path}/${dataset}" --images images --downscale 1
-    python -m pdb main_neulf.py "${stanford_path}/${dataset}" --workspace "/data/result/result${test_day}/${test_day}_${dataset}_uvxy_relu_encX" --depth $depth --width $width --LF_mode uvxy --whole_epoch $epoch --eval_interval 1 
+    python main_neulf.py "${stanford_path}/${dataset}" --workspace "/data/result/result${test_day}/${test_day}_${dataset}_uvxy_relu_encX" --depth $depth --width $width --LF_mode uvxy --whole_epoch $epoch --eval_interval 10 
     #python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_vec_relu_encX" --depth $depth --width $width --LF_mode vec --neulf --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000
     # python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_uvxy_wire_encX" --depth $depth --width $width --LF_mode uvxy --whole_epoch $epoch --render_only
     # python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_vec_wire_encX" --depth $depth --width $width --LF_mode vec --whole_epoch $epoch --render_only

@@ -7,7 +7,7 @@ tmp*
 data/
 result_exp/
 run_sh/
-result_json
+result_json/
 
 trial*/
 .vs/
