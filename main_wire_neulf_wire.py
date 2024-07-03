@@ -137,7 +137,7 @@ if __name__ == '__main__':
         skips = [4]
 
     
-    model = NeuLFWireNetwork( num_layers=opt.depth ,hidden_dim=opt.width , input_dim=input_dim, skips=skips)
+    model = NeuLFWireNetwork( num_layers=opt.depth ,hidden_dim=opt.width , input_dim=input_dim, skips=skips ,  sigma = opt.sigma , omega = opt.omega)
     lr = opt.lr
     
     # if opt.skip_mode2:

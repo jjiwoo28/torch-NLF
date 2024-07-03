@@ -7,31 +7,31 @@ bmw1="bike_1by1_direction1_new"
 llff1="fern"
 stanford1="knights"
 stanford2="bunny"
-test_day="240619_wire_test"
+test_day="240623_wire_gem_test"
 depth="8"
 width="256"
-epoch="300"
+epoch="1000"
 #datasets=("gem" "knights" "bunny" "beans" "flowers" "chess" "bracelet" "bulldozer" "treasure" "truck" "tarot_small" "tarot")  
 #datasets=("knights" "gem" "bunny" "bracelet")  
-datasets=("knights" "gem" "bunny" "bracelet")  
+# datasets=("knights" "gem" "bunny" "bracelet")  
 
 
 
-for dataset in "${datasets[@]}"; do
-    echo "Processing $dataset"
-    #python scripts/stanford2neulf.py "${stanford_path}/${dataset}" --images images --downscale 1
-    #python main_wire_neulf_wire.py "${stanford_path}/${dataset}" --workspace "${test_day}/${test_day}_${dataset}_uvxy_wire_encX_5e-3" --depth $depth --width $width --LF_mode uvxy  --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000 --lr 5e-3 --no_skips
-    python main_wire_neulf_wire.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_uvxy_wire_encX_5e-4" --depth $depth --width $width --LF_mode uvxy  --whole_epoch $epoch --eval_interval 10 --loss_coeff 1000 --lr 5e-4 
+# for dataset in "${datasets[@]}"; do
+#     echo "Processing $dataset"
+#     #python scripts/stanford2neulf.py "${stanford_path}/${dataset}" --images images --downscale 1
+#     #python main_wire_neulf_wire.py "${stanford_path}/${dataset}" --workspace "${test_day}/${test_day}_${dataset}_uvxy_wire_encX_5e-3" --depth $depth --width $width --LF_mode uvxy  --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000 --lr 5e-3 --no_skips
+#     python main_wire_neulf_wire.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_uvxy_wire_encX_5e-4" --depth $depth --width $width --LF_mode uvxy  --whole_epoch $epoch --eval_interval 10 --loss_coeff 1000 --lr 5e-4 
 
-    #python main_wire_neulf_wire.py "${stanford_path}/${dataset}" --workspace "${test_day}/${test_day}_${dataset}_uvxy_wire_encX_5e-6" --depth $depth --width $width --LF_mode uvxy  --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000 --lr 5e-6
-    #python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_vec_relu_encX" --depth $depth --width $width --LF_mode vec --neulf --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000
-    # python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_uvxy_wire_encX" --depth $depth --width $width --LF_mode uvxy --whole_epoch $epoch --render_only
-    # python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_vec_wire_encX" --depth $depth --width $width --LF_mode vec --whole_epoch $epoch --render_only
-    #python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_uvxy_freq_with_relu" --depth $depth --width $width --LF_mode uvxy --act relu --freq_neulf --whole_epoch $epoch --eval_interval 1
-    #python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_vec_freq_with_relu" --depth $depth --width $width --LF_mode vec --act relu --freq_neulf --whole_epoch $epoch --eval_interval 1
-    # python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}${test_day}_${dataset}_uvxy_freq_with_wire" --depth $depth --width $width --LF_mode uvxy --act wire --freq_neulf --whole_epoch $epoch 
-    # python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_vec_freq_with_wire" --depth $depth --width $width --LF_mode vec --act wire --freq_neulf --whole_epoch $epoch 
-done
+#     #python main_wire_neulf_wire.py "${stanford_path}/${dataset}" --workspace "${test_day}/${test_day}_${dataset}_uvxy_wire_encX_5e-6" --depth $depth --width $width --LF_mode uvxy  --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000 --lr 5e-6
+#     #python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_vec_relu_encX" --depth $depth --width $width --LF_mode vec --neulf --whole_epoch $epoch --eval_interval 1 --loss_coeff 1000
+#     # python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_uvxy_wire_encX" --depth $depth --width $width --LF_mode uvxy --whole_epoch $epoch --render_only
+#     # python main_wire_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_vec_wire_encX" --depth $depth --width $width --LF_mode vec --whole_epoch $epoch --render_only
+#     #python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_uvxy_freq_with_relu" --depth $depth --width $width --LF_mode uvxy --act relu --freq_neulf --whole_epoch $epoch --eval_interval 1
+#     #python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "${test_day}_${dataset}_vec_freq_with_relu" --depth $depth --width $width --LF_mode vec --act relu --freq_neulf --whole_epoch $epoch --eval_interval 1
+#     # python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}${test_day}_${dataset}_uvxy_freq_with_wire" --depth $depth --width $width --LF_mode uvxy --act wire --freq_neulf --whole_epoch $epoch 
+#     # python main_featuresplit_neulf.py "${stanford_path}/${dataset}" --workspace "/data/hmjung/result${test_day}/${test_day}_${dataset}_vec_freq_with_wire" --depth $depth --width $width --LF_mode vec --act wire --freq_neulf --whole_epoch $epoch 
+# done
 
 datasets=("gem") 
 
