@@ -33,7 +33,7 @@ def main():
         custom()
 
 def custom():
-    copy_json_files("/data/result/result240621_torch_NLF_wire_test", "result240621_torch_NLF_wire_test")
+    copy_json_files("/data/result/result240621_torch_NLF_wire_test", "result_json/result240621_torch_NLF_wire_test")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

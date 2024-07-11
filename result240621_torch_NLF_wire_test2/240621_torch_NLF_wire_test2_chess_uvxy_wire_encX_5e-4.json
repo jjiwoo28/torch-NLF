@@ -1,0 +1,12 @@
+{
+    "result": {
+        "0": 0
+    },
+    "name": "/data/result/result240621_torch_NLF_wire_test2/240621_torch_NLF_wire_test2_chess_uvxy_wire_encX_5e-4",
+    "depth": 8,
+    "width": 256,
+    "LF_mode": "uvxy",
+    "datadir": "/data/stanford_half/chess",
+    "lr": 0.0005,
+    "dataset_name": "chess"
+}
